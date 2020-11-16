@@ -548,7 +548,7 @@ valueBox(value = paste(format(df_general_pais_ultima_fecha$fallecidos, big.mark 
 ### Mapa de casos positivos en cantones
 ```{r}
 
-paleta_morada <- colorBin(palette = "heat", 
+paleta_morada <- colorBin(palette = "Heat", 
                         domain = sf_fallecidos_cantones_ultima_fecha$fallecidos,
                        bins = 10
                )

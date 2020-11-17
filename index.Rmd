@@ -1,7 +1,7 @@
   ---
-title: "Estado del COVID-19 en Costa Rica"
-author: "ING. Juan Miguel Víquez R"
-output: 
+ title: "Estado del COVID-19 en Costa Rica"
+  author: "ING. Juan Miguel Víquez R"
+  output: 
   flexdashboard::flex_dashboard:
     orientation: rows
     social: menu
@@ -176,7 +176,7 @@ valueBox(value = paste(format(df_general_pais_ultima_fecha$activos, big.mark = "
                        round(100 * df_general_pais_ultima_fecha$activos / df_general_pais_ultima_fecha$positivos, 1), 
                        "%)", sep = ""), 
          caption = "Total de casos activos",
-         icon = icono_positivos, 
+         icon = icono_activos, 
          color = color_activos
 )
 ```
@@ -187,7 +187,7 @@ valueBox(value = paste(format(df_general_pais_ultima_fecha$RECUPERADOS, big.mark
                        round(100 * df_general_pais_ultima_fecha$RECUPERADOS / df_general_pais_ultima_fecha$positivos, 1), 
                        "%)", sep = ""), 
          caption = "Total de casos recuperados",
-         icon = icono_positivos, 
+         icon = icono_recuperados, 
          color = color_recuperados
 )
 ```
@@ -198,7 +198,7 @@ valueBox(value = paste(format(df_general_pais_ultima_fecha$fallecidos, big.mark 
                        round(100 * df_general_pais_ultima_fecha$fallecidos / df_general_pais_ultima_fecha$positivos, 1), 
                        "%)", sep = ""), 
          caption = "Total de casos fallecidos",
-         icon = icono_positivos, 
+         icon = icono_fallecidos, 
          color = color_fallecidos
 )
 ```
@@ -284,11 +284,8 @@ Casos positivos
 Row {data-height=1}
 -----------------------------------------------------------------------
 ### **Última actualización de datos: `r  df_general_pais_ultima_fecha$FECHA`**
-
-
-Row
+Row 
 -----------------------------------------------------------------------
-
 ### Casos positivos {.value-box}
 ```{r}
 valueBox(value = paste(format(df_general_pais_ultima_fecha$positivos, big.mark = ","), "", sep = " "), 
@@ -338,8 +335,7 @@ leaflet_cantonespositivos <- leaflet(sf_positivos_cantones_ultima_fecha) %>%
 # Despliegue del mapa
 leaflet_cantonespositivos
 ```
-
-### Gráfico de cantones con mayor cantidad de casos positivos
+###Grafico casos positivos
 ```{r}
 st_drop_geometry(sf_positivos_cantones_ultima_fecha) %>%
 mutate(canton = factor(canton, levels = canton)) %>%
@@ -362,13 +358,14 @@ layout(yaxis = list(title = "Cantidad de casos positivos"),
 ) 
 ```
 
-
 Casos activos
 =======================================================================
-Row {data-height=10}
+Row {data-height=1}
 -----------------------------------------------------------------------
-### **Última actualización de datos realizada el `r  df_general_pais_ultima_fecha$FECHA` con base en los [datos publicados por el Ministerio de Salud de Costa Rica](http://geovision.uned.ac.cr/oges/)**.
-### Value box activos
+### **Última actualización de datos: `r  df_general_pais_ultima_fecha$FECHA`**
+Row 
+-----------------------------------------------------------------------
+### Casos activos {.value-box}
 ```{r}
 valueBox(value = paste(format(df_general_pais_ultima_fecha$activos, big.mark = ","), "", sep = " "), 
          caption = "Total de casos activos", 
@@ -376,7 +373,11 @@ valueBox(value = paste(format(df_general_pais_ultima_fecha$activos, big.mark = "
          color = color_activos
 )
 ```
-### Mapa de casos positivos en cantones
+
+Row {data-width=400}
+-----------------------------------------------------------------------
+
+### Mapa de casos activos en cantones
 ```{r}
 
 paleta_roja <- colorBin(palette = "Reds", 
@@ -413,19 +414,7 @@ leaflet_cantonesactivos <- leaflet(sf_activos_cantones_ultima_fecha) %>%
 # Despliegue del mapa
 leaflet_cantonesactivos
 ```
-### Tabla de cantidades de casos en cantones
-```{r}
-st_drop_geometry(sf_activos_cantones_ultima_fecha) %>% 
-  select(Provincia = provincia, Canton = canton, Activos = activos) %>%
-  DT::datatable(rownames = FALSE,
-                options = list(searchHighlight = TRUE, 
-                               language = list(url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json')
-                               )
-  )
-```
-
-
-### Gráfico de cantones con mayor cantidad de casos activos
+###Grafico casos activos
 ```{r}
 st_drop_geometry(sf_activos_cantones_ultima_fecha) %>%
 mutate(canton = factor(canton, levels = canton)) %>%
@@ -450,10 +439,15 @@ layout(yaxis = list(title = "Cantidad de casos activos"),
 
 Casos recuperados
 =======================================================================
-Row {data-height=10}
+Row {data-height=1}
 -----------------------------------------------------------------------
-### **Última actualización de datos realizada el `r  df_general_pais_ultima_fecha$FECHA` con base en los [datos publicados por el Ministerio de Salud de Costa Rica](http://geovision.uned.ac.cr/oges/)**.
-### Value box recuperados
+### **Última actualización de datos: `r  df_general_pais_ultima_fecha$FECHA`**
+
+
+Row
+-----------------------------------------------------------------------
+
+### Casos Recuperados {.value-box}
 ```{r}
 valueBox(value = paste(format(df_general_pais_ultima_fecha$recuperados, big.mark = ","), "", sep = " "), 
          caption = "Total de casos recuperados", 
@@ -461,6 +455,10 @@ valueBox(value = paste(format(df_general_pais_ultima_fecha$recuperados, big.mark
          color = color_recuperados
 )
 ```
+
+Row {data-width=400}
+-----------------------------------------------------------------------
+
 ### Mapa de casos recuperados en cantones
 ```{r}
 
@@ -497,16 +495,6 @@ leaflet_cantonesrecuperados <- leaflet(sf_recuperados_cantones_ultima_fecha) %>%
 
 # Despliegue del mapa
 leaflet_cantonesrecuperados
-```
-### Tabla de cantidades de casos en cantones
-```{r}
-st_drop_geometry(sf_recuperados_cantones_ultima_fecha) %>% 
-  select(Provincia = provincia, Canton = canton, Recuperados = recuperados) %>%
-  DT::datatable(rownames = FALSE,
-                options = list(searchHighlight = TRUE, 
-                               language = list(url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json')
-                               )
-  )
 ```
 
 ### Gráfico de cantones con mayor cantidad de casos recuperados
@@ -581,16 +569,6 @@ leaflet_cantonesfallecidos <- leaflet(sf_fallecidos_cantones_ultima_fecha) %>%
 
 # Despliegue del mapa
 leaflet_cantonesfallecidos
-```
-### Tabla de cantidades de casos en cantones
-```{r}
-st_drop_geometry(sf_fallecidos_cantones_ultima_fecha) %>% 
-  select(Provincia = provincia, Canton = canton, Fallecidos= fallecidos) %>%
-  DT::datatable(rownames = FALSE,
-                options = list(searchHighlight = TRUE, 
-                               language = list(url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json')
-                               )
-  )
 ```
 
 ### Gráfico de cantones con mayor cantidad de fallecidos

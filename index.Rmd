@@ -25,26 +25,26 @@ library(leaflet)
 color_positivos <- 'blue'
 color_activos <- 'red'
 color_recuperados <- 'green'
-color_fallecidos <- 'violet'
+color_fallecidos <- 'purple'
 
 color_nuevos_positivos <- 'grey'
 
-color_hospitalizados <- 'black'
-color_salon <- 'yellow'
+color_hospitalizados <- 'lightblue'
+color_salon <- 'lightgreen'
 color_uci <- 'brown'
 
 #--------------------- Íconos ---------------------
 
 icono_positivos <- 'fas fa-user-md'
-icono_activos <- 'fas fa-head-side-virus'
-icono_recuperados <- 'fas fa-virus-slash'
-icono_fallecidos <- 'fas fa-skull-crossbones'
+icono_activos <- "fas fa-bed"
+icono_recuperados <- 'fas fa-briefcase-medical'
+icono_fallecidos <- 'fas fa-skull'
 
 icono_nuevos_positivos <- 'fas fa-user-md'
 
-icono_hospitalizados <- 'fas fa-user-md'
-icono_salon <- 'fas fa-user-md'
-icono_uci <- 'fas fa-user-md'
+icono_hospitalizados <- "fas fa-hospital-alt"
+icono_salon <- "fas fa-hospital"
+icono_uci <- "fas fa-procedures"
 
 #--------------- Otros parámetros -----------------
 
@@ -547,7 +547,7 @@ Row {data-width=400}
 ### Mapa de casos fallecidos en cantones
 ```{r}
 
-paleta_fallecidos <- colorBin(palette = "Pink", 
+paleta_fallecidos <- colorBin(palette = "Purple", 
                               domain = sf_fallecidos_cantones_ultima_fecha$fallecidos,
                               bins = 9
 )

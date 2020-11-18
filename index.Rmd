@@ -547,7 +547,7 @@ Row {data-width=400}
 ### Mapa de casos fallecidos en cantones
 ```{r}
 
-paleta_fallecidos <- colorBin(palette = "Purple", 
+paletafallecidos <- colorBin(palette = "Purples", 
                               domain = sf_fallecidos_cantones_ultima_fecha$fallecidos,
                               bins = 9
 )
@@ -555,7 +555,7 @@ paleta_fallecidos <- colorBin(palette = "Purple",
 leaflet_cantones_fallecidos <- leaflet(sf_fallecidos_cantones_ultima_fecha) %>% 
   fitBounds(lng1 = -86, lng2 = -82, lat1 = 8, lat2 = 11) %>%
   addProviderTiles(providers$OpenStreetMap.Mapnik, group = "OpenStreetMap") %>%
-  addPolygons(fillColor = ~paleta_fallecidos(fallecidos), stroke=T, fillOpacity = 1,
+  addPolygons(fillColor = ~paletafallecidos(fallecidos), stroke=T, fillOpacity = 1,
               color="black", weight=0.2, opacity= 0.5,
               group = "Cantones",
               popup = paste("Provincia: ", sf_fallecidos_cantones_ultima_fecha$provincia, "<br>",
@@ -563,7 +563,7 @@ leaflet_cantones_fallecidos <- leaflet(sf_fallecidos_cantones_ultima_fecha) %>%
                             "Fallecidos: ", sf_fallecidos_cantones_ultima_fecha$fallecidos
               )
   ) %>%
-  addLegend("bottomright", pal = paleta_fallecidos, values = ~fallecidos,
+  addLegend("bottomright", pal = paletafallecidos, values = ~fallecidos,
             title = "Casos fallecidos",
             opacity = 1
   ) %>%  
